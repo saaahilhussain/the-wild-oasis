@@ -2,19 +2,11 @@ import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 import Button from './ui/Button';
 import Input from './ui/Input';
-
-const H1 = styled.h1`
-  color: orangered;
-  font-weight: 600;
-  background-color: aquamarine;
-  padding: 1rem;
-  margin: 2rem;
-  border-radius: 3rem;
-`;
+import Heading from './ui/Heading';
 
 const StyledApp = styled.main`
   padding: 20px;
-  background-color: #333;
+  background-color: orangered;
 `;
 
 function App() {
@@ -22,13 +14,15 @@ function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <H1>Hello World</H1>
-        <H1>React</H1>
-        <H1>React Router</H1>
-        <H1>React Query</H1>
-        <H1>Next.js</H1>
+        <Heading as='h1'>Hello World</Heading>
+
+        <Button onClick={() => alert('Checki-In')}>Check-In</Button>
+
+        <Heading as='h2'>Heading 2</Heading>
+
+        <Button onClick={() => alert('Check-Out')}>Check-Out</Button>
+        <Heading as='h3'>Heading 3</Heading>
         <Input type='text' placeholder='React is love' />
-        <Button onClick={() => alert('tailwind is cool')}>tailwind</Button>
       </StyledApp>
     </>
   );
