@@ -1,8 +1,6 @@
-/*
+import { createGlobalStyle } from 'styled-components';
 
-*/
-
-/* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
+const GlobalStyles = createGlobalStyle`
 
 :root {
   /* Indigo */
@@ -75,7 +73,7 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: var(--color-grey-700);
 
   transition: color 0.3s, background-color 0.3s;
@@ -185,3 +183,6 @@ FOR DARK MODE
 --image-grayscale: 10%;
 --image-opacity: 90%;
 */
+`;
+
+export default GlobalStyles;
