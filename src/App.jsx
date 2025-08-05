@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
+import Button from './ui/Button';
+import Input from './ui/Input';
 
 const H1 = styled.h1`
   color: orangered;
@@ -25,6 +27,8 @@ function App() {
         <H1>React Router</H1>
         <H1>React Query</H1>
         <H1>Next.js</H1>
+        <Input type='text' placeholder='React is love' />
+        <Button onClick={() => alert('tailwind is cool')}>tailwind</Button>
       </StyledApp>
     </>
   );
