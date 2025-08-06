@@ -82,7 +82,7 @@ body {
   font-size: 1.6rem;
 }
 
-input,
+
 button,
 textarea,
 select {
