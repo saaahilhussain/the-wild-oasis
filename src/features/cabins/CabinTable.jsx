@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import CabinRow from './CabinRow';
 import { useQuery } from '@tanstack/react-query';
 import { getCabins } from '../../services/apiCabins';
+import Spinner from '../../ui/Spinner';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -37,7 +38,7 @@ function CabinTable() {
     queryFn: getCabins,
   });
 
-  console.log(cabins);
+  if (isLoading) return <Spinner />;
 
   return (
     <Table role='table'>
