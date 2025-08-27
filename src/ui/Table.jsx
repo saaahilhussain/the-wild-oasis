@@ -89,13 +89,10 @@ function Row({ children }) {
   );
 }
 
-function Body({ children }) {
-  const { columns } = useContext(TableContext);
-  return (
-    <StyledBody role='body' columns={columns}>
-      {children}
-    </StyledBody>
-  );
+function Body({ data, render }) {
+  if (!data.length) return <Empty>Error! No data to show at the moment</Empty>;
+
+  return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
 Table.Header = Header;
