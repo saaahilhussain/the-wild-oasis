@@ -9,7 +9,14 @@ function Cabins() {
     <>
       <Row type='horizontal'>
         <Heading as='h1'>All cabins</Heading>
-        <Filter />
+        <Filter
+          filterField='discount'
+          options={[
+            { value: "all", label: "All" },
+            { value: "with-discount", label: "With discount" },
+            { value: "no-discount", label: "No discount" },
+          ]}
+        />
       </Row>
 
       <Row>
