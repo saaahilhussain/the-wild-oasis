@@ -1,6 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router";
+import { AiFillThunderbolt } from "react-icons/ai";
+import { PAGE_SIZE } from "../../utils/constants";
 
 export function useBookings() {
   const queryClient = useQueryClient();
@@ -28,10 +30,13 @@ export function useBookings() {
     });
 
   // PRE-FETCHING
-  queryClient.prefetchQuery({
-    queryKey: ["bookings", filter, sortBy, page + 1],
-    queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
-  });
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  if (page < PAGE_SIZE)
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, page + 1],
+      queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
+    });
 
   return { isLoading, bookings, count };
 }
