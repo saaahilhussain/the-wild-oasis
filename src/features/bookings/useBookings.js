@@ -38,5 +38,11 @@ export function useBookings() {
       queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
     });
 
+  if (page > 1)
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, page - 1],
+      queryFn: () => getBookings({ filter, sortBy, page: page - 1 }),
+    });
+
   return { isLoading, bookings, count };
 }
