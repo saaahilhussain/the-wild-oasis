@@ -22,7 +22,6 @@ export function useBookings() {
 
   // PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
-<<<<<<< HEAD
 
   const { isPending: isLoading, data: { data: bookings, count } = {} } =
     useQuery({
@@ -33,7 +32,7 @@ export function useBookings() {
   // PRE-FETCHING
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
-  if (page < PAGE_SIZE)
+  if (page < pageCount)
     queryClient.prefetchQuery({
       queryKey: ["bookings", filter, sortBy, page + 1],
       queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
@@ -46,17 +45,4 @@ export function useBookings() {
     });
 
   return { isLoading, bookings, count };
-=======
-
-  const {
-    isPending: isLoading,
-    data: { data: bookings, count } = {},
-    error,
-  } = useQuery({
-    queryKey: ["bookings", filter, sortBy, page],
-    queryFn: () => getBookings({ filter, sortBy, page }),
-  });
-
-  return { isLoading, error, bookings, count };
->>>>>>> ae3432b (pagination work yet again)
 }
