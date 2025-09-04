@@ -22,6 +22,7 @@ export function useBookings() {
 
   // PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+<<<<<<< HEAD
 
   const { isPending: isLoading, data: { data: bookings, count } = {} } =
     useQuery({
@@ -45,4 +46,17 @@ export function useBookings() {
     });
 
   return { isLoading, bookings, count };
+=======
+
+  const {
+    isPending: isLoading,
+    data: { data: bookings, count } = {},
+    error,
+  } = useQuery({
+    queryKey: ["bookings", filter, sortBy, page],
+    queryFn: () => getBookings({ filter, sortBy, page }),
+  });
+
+  return { isLoading, error, bookings, count };
+>>>>>>> ae3432b (pagination work yet again)
 }

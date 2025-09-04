@@ -1,5 +1,6 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { useSearchParams } from "react-router";
+import { PAGE_SIZE } from "../utils/constants";
 import styled from "styled-components";
 import { PAGE_SIZE } from "../utils/constants";
 
