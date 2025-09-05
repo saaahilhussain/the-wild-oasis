@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router";
-import { AiFillThunderbolt } from "react-icons/ai";
 import { PAGE_SIZE } from "../../utils/constants";
 
 export function useBookings() {
