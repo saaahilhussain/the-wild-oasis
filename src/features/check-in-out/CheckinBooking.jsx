@@ -7,12 +7,14 @@ import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
 import Spinner from "../../ui/Spinner";
-import CheckBox from "../../ui/CheckBox";
+import CheckBox from "../../ui/Checkbox";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../bookings/useBooking";
 import { useEffect, useState } from "react";
+import { useCheckin } from "./useCheckin";
 import { formatCurrency } from "../../utils/helpers";
+import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
   /* Box */
@@ -24,14 +26,18 @@ const Box = styled.div`
 
 function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
+  const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
+  const { settings, isLoading: isLoadingSettings } = useSettings();
 
   useEffect(() => {
     if (booking) setConfirmPaid(booking?.isPaid ?? false);
   }, [booking]);
 
   const moveBack = useMoveBack();
-  if (isLoading) return <Spinner />;
+  const { checkin, isCheckingIn } = useCheckin();
+
+  if (isLoading || isLoadingSettings) return <Spinner />;
 
   const {
     id: bookingId,
@@ -42,33 +48,74 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  function handleCheckin() {}
+  const optionalBreakfastPrice =
+    Number(settings.breakfastPrice) * numNights * numGuests;
+
+  // console.log(settings?.breakfastPrice);
+  function handleCheckin() {
+    if (!confirmPaid) return;
+
+    if (addBreakfast) {
+      checkin({
+        bookingId,
+        breakfast: {
+          hasBreakfast: true,
+          extrasPrice: optionalBreakfastPrice,
+          totalPrice: totalPrice + optionalBreakfastPrice,
+        },
+      });
+    } else {
+      checkin({ bookingId, breakfast: {} });
+    }
+  }
 
   return (
     <>
-      <Row type="horizontal">
-        <Heading as="h1">Check in booking #{bookingId}</Heading>
+      <Row type='horizontal'>
+        <Heading as='h1'>Check in booking #{bookingId}</Heading>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
       <BookingDataBox booking={booking} />
+
+      {!hasBreakfast && (
+        <Box>
+          <CheckBox
+            checked={addBreakfast}
+            onChange={() => {
+              setAddBreakfast((add) => !add);
+              setConfirmPaid(false);
+            }}
+            id='breakfast'
+          >
+            Add breakfast for {formatCurrency(optionalBreakfastPrice)}.
+          </CheckBox>
+        </Box>
+      )}
+
       <Box>
         <CheckBox
           checked={confirmPaid}
           onChange={() => setConfirmPaid((confirmed) => !confirmed)}
-          disabled={confirmPaid}
-          id="confirm"
+          disabled={confirmPaid || isCheckingIn}
+          id='confirm'
         >
           I confirm that {guests.fullName} has paid the total amount of{" "}
-          {formatCurrency(totalPrice)}
+          {!addBreakfast
+            ? formatCurrency(totalPrice)
+            : `${formatCurrency(
+                totalPrice + optionalBreakfastPrice
+              )} (${formatCurrency(totalPrice)} + ${formatCurrency(
+                optionalBreakfastPrice
+              )})`}
         </CheckBox>
       </Box>
 
       <ButtonGroup>
-        <Button disabled={confirmPaid} onClick={handleCheckin}>
+        <Button disabled={!confirmPaid || isCheckingIn} onClick={handleCheckin}>
           Check in booking #{bookingId}
         </Button>
-        <Button variation="secondary" onClick={moveBack}>
+        <Button variation='secondary' onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>
