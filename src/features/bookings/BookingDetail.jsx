@@ -26,12 +26,14 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
-  const moveBack = useMoveBack();
-  const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeleting } = useDeleteBooking();
 
+  const moveBack = useMoveBack();
+  const navigate = useNavigate();
+
   if (isLoading) return <Spinner />;
+  if (!booking) return <Emptu resourceName='booking' />;
 
   const { status, id: bookingId } = booking;
 
