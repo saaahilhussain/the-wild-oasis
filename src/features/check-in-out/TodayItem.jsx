@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Tag from "../../ui/Tag";
 import { Flag } from "../../ui/Flag";
 import CheckoutButton from "./CheckoutButton";
+import Button from "../../ui/Button";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -37,7 +38,7 @@ function TodayItem({ activity }) {
 
       {status === "unconfirmed" && (
         <Button
-          type='small'
+          size='small'
           variation='primary'
           as={Link}
           to={`/checkin/${id}`}
