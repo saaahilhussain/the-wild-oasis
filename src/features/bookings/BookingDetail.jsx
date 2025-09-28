@@ -9,7 +9,7 @@ import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import Spinner from "../../ui/Spinner";
 import { useBooking } from "./useBooking";
 import { useCheckout } from "../check-in-out/useCheckout";
